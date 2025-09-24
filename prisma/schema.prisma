@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+USER
+ADMIN
+}
+
+
+model Usuario {
+id Int @id @default(autoincrement())
+nome String
+email String @unique
+passwordHash String
+verificado Boolean @default(false)
+role Role @default(USER)
+criadoEm DateTime @default(now())
+atualizadoEm DateTime @updatedAt
+tokens VerificationToken[]
+posts Post[]
+}
+
+model Post {
+id Int @id @default(autoincrement())
+titulo String
+conteudo String
+data DateTime @default(now())
+authorId Int
+author Usuario @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+
+@@index([authorId])
+}
+
+model VerificationToken {
+id Int @id @default(autoincrement())
+token String @unique
+userId Int
+user Usuario @relation(fields: [userId], references: [id], onDelete: Cascade)
+expiresAt DateTime
+usedAt DateTime?
+createdAt DateTime @default(now())
+
+
+@@index([userId])
+}
