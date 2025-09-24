@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    # carrega variáveis do seu .env local (JWT, GMAIL, SUPER_ADMINS, etc.)
+    env_file:
+      - .env
+    environment:
+      # SQLite dentro do container (persistido via volume abaixo)
+      DATABASE_URL: "file:./prisma/dev.db"
+      NODE_ENV: "production"
+      PORT: "3000"
+      # define se não existir no .env
+      APP_URL: "http://localhost:3000"
+    ports:
+      - "3000:3000"
+    # aplica migrações e sobe o servidor
+    command: >
+      sh -c "
+        npx prisma migrate deploy &&
+        node dist/server.js
+      "
+    # persiste o arquivo dev.db no host
+    volumes:
+      - ./prisma:/app/prisma
