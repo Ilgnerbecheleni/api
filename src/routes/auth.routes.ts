@@ -1,3 +1,26 @@
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: Login do usuário
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginRequest'
+ *     responses:
+ *       200:
+ *         description: Autenticado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LoginResponse'
+ *       401:
+ *         description: Credenciais inválidas
+ */
+
 import { Router } from "express";
 import { authController } from "../controllers/auth.controller";
 import { auth } from "../middlewares/auth";
