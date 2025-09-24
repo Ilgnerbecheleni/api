@@ -8,12 +8,12 @@ export function createApp() {
 const app = express();
 app.use(express.json());
 
-
-// rotas
-app.use(routes);
  // Swagger UI e JSON
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 app.get("/docs.json", (_req, res) => res.json(swaggerSpec));
+// rotas
+app.use(routes);
+
 
 // health em nível de app (opcional)
 app.get("/health", (_req, res) => {
