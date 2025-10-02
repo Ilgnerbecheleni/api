@@ -27,20 +27,10 @@ role Role @default(USER)
 criadoEm DateTime @default(now())
 atualizadoEm DateTime @updatedAt
 tokens VerificationToken[]
-posts Post[]
+mqttUser      MqttUser?         // deixe opcional para evitar ciclo de obrigatoriedade
 }
 
-model Post {
-id Int @id @default(autoincrement())
-titulo String
-conteudo String
-data DateTime @default(now())
-authorId Int
-author Usuario @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-
-@@index([authorId])
-}
 
 model VerificationToken {
 id Int @id @default(autoincrement())
@@ -53,4 +43,13 @@ createdAt DateTime @default(now())
 
 
 @@index([userId])
+}
+
+model MqttUser {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique    // geralmente queremos único pro login do MQTT
+  password  String
+
+  userId    Int      @unique
+  user      Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
