@@ -5,7 +5,7 @@ import usuariosRoutes from "./usuarios.routes";
 import authRoutes from "./auth.routes";
 import verificationRoutes from "./verification.routes";
 import adminRoutes from "./admin.routes";
-
+import mqttUserRoutes from './mqttUser.routes'
 const router = Router();
 
 
@@ -15,5 +15,7 @@ router.use("/usuarios", usuariosRoutes);
 
 router.use(authRoutes);
 router.use(verificationRoutes);
+router.use(mqttUserRoutes)
 router.use(adminRoutes);
+
 export default router;

@@ -1,0 +1,11 @@
+import "express";
+
+declare module "express-serve-static-core" {
+  interface Request {
+    user?: {
+      id: number;
+      role?: "ADMIN" | "USER";
+      // ...outros campos do seu middleware
+    }
+  }
+}

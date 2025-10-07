@@ -3,7 +3,7 @@ import { createApp } from "./app";
 import { prisma } from "./lib/prisma";
 
 const PORT = Number(process.env.PORT) || 3000;
-const HOST = "0.0.0.0";
+const HOST = "localhost";
 
 async function bootstrap() {
   await prisma.$connect(); // garante conexão no boot
